@@ -1,0 +1,49 @@
+
+#type: args
+data:
+  target_dim: 20 # K, number of features
+  condition_L: 0 # L_cond, (time) length of conditional data
+  target_L: 1 # L_target, (time) length of target data
+  train_data_path: "./data/stock/stock_data_train.npy"
+  test_data_path: "./data/stock/stock_data_test.npy"
+  normalize_method: "normalize" # normalize: demean and divide by std; reflect_normalize: reflect and then normalize
+
+train:
+  epochs: 300
+  batch_size: 1200
+  lr: 1.0e-2
+  lr_end: 1.0e-5
+  lr_scheduler: "ExponentialLR"
+  lr_decay_time: "epoch" # "epoch" or "batch"
+  itr_per_epoch: 1.0e+8
+
+test:
+  batch_size: 282
+
+diffusion:
+  layers: 4 
+  channels: 8 
+  nheads: 2
+  diffusion_embedding_dim: 32
+  sigma_begin: 0.8 # begin from big noise
+  sigma_end: 0.01
+  sigma_scale: False # True if want to use non-homogeneous sigma at different sample points
+  non_homo_sigma_max_scale: 2.0
+  num_steps: 20
+  n_steps_each: 100
+  start_noise: "gaussian"
+  start_noise_t_param: 3.5
+  step_lr: 0.0001
+  anneal_power: 2.0
+  schedule: "quad"
+  is_linear: True
+  noise_type: "gaussian"
+  t_param: 3.5 # degree of freedom if using student_t noise
+
+model:
+  is_unconditional: True
+  use_perturbed_observation: True
+  timeemb: 16
+  featureemb: 8
+  target_strategy: "test"
+  num_sample_features: 20

@@ -1,0 +1,49 @@
+{
+    "data": {
+        "target_dim": 3,
+        "condition_L": 5,
+        "target_L": 5,
+        "train_data_path": "./data/vectorAR/var_pareto_unconditional.npy",
+        "test_data_path": "./data/vectorAR/var_pareto_conditional.npy",
+        "normalize_method": "normalize"
+    },
+    "train": {
+        "epochs": 40,
+        "batch_size": 1024,
+        "lr": 0.01,
+        "lr_end": 1e-05,
+        "lr_scheduler": "ExponentialLR",
+        "lr_decay_time": "epoch",
+        "itr_per_epoch": 100000000.0
+    },
+    "test": {
+        "batch_size": 10000
+    },
+    "diffusion": {
+        "layers": 4,
+        "channels": 8,
+        "nheads": 2,
+        "diffusion_embedding_dim": 32,
+        "sigma_begin": 1.0,
+        "sigma_end": 0.01,
+        "sigma_scale": false,
+        "non_homo_sigma_max_scale": 2.0,
+        "num_steps": 20,
+        "n_steps_each": 50,
+        "start_noise": "gaussian",
+        "start_noise_t_param": 4.5,
+        "step_lr": 0.0001,
+        "anneal_power": 2.0,
+        "schedule": "quad",
+        "is_linear": true,
+        "noise_type": "gaussian",
+        "t_param": 4.5
+    },
+    "model": {
+        "is_unconditional": true,
+        "timeemb": 16,
+        "featureemb": 8,
+        "target_strategy": "test",
+        "num_sample_features": 3
+    }
+}

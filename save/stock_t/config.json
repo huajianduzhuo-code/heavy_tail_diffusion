@@ -1,0 +1,50 @@
+{
+    "data": {
+        "target_dim": 20,
+        "condition_L": 0,
+        "target_L": 1,
+        "train_data_path": "./data/stock/stock_data_train.npy",
+        "test_data_path": "./data/stock/stock_data_test.npy",
+        "normalize_method": "normalize"
+    },
+    "train": {
+        "epochs": 300,
+        "batch_size": 1200,
+        "lr": 0.01,
+        "lr_end": 1e-05,
+        "lr_scheduler": "ExponentialLR",
+        "lr_decay_time": "epoch",
+        "itr_per_epoch": 100000000.0
+    },
+    "test": {
+        "batch_size": 282
+    },
+    "diffusion": {
+        "layers": 4,
+        "channels": 8,
+        "nheads": 2,
+        "diffusion_embedding_dim": 32,
+        "sigma_begin": 0.8,
+        "sigma_end": 0.01,
+        "sigma_scale": false,
+        "non_homo_sigma_max_scale": 2.0,
+        "num_steps": 20,
+        "n_steps_each": 100,
+        "start_noise": "student_t",
+        "start_noise_t_param": 3.5,
+        "step_lr": 0.0001,
+        "anneal_power": 2.0,
+        "schedule": "quad",
+        "is_linear": true,
+        "noise_type": "student_t",
+        "t_param": 3.5
+    },
+    "model": {
+        "is_unconditional": true,
+        "use_perturbed_observation": true,
+        "timeemb": 16,
+        "featureemb": 8,
+        "target_strategy": "test",
+        "num_sample_features": 20
+    }
+}

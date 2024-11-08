@@ -1,0 +1,48 @@
+
+#type: args
+data:
+  target_dim: 20 # K, number of features
+  condition_L: 1 # L_cond, (time) length of conditional data
+  target_L: 1 # L_target, (time) length of target data
+  train_data_path: "./data/queue/queue_data_20d.npy"
+  test_data_path: "./data/queue/queue_data_20d_conditional.npy"
+  normalize_method: "normalize" # normalize: demean and divide by std; reflect_normalize: reflect and then normalize
+
+train:
+  epochs: 30
+  batch_size: 1024
+  lr: 1.0e-3
+  lr_end: 1.0e-6
+  lr_scheduler: "ExponentialLR"
+  lr_decay_time: "epoch" # "epoch" or "batch"
+  itr_per_epoch: 1.0e+8
+
+test:
+  batch_size: 10000
+
+diffusion:
+  layers: 4 
+  channels: 8 
+  nheads: 2
+  diffusion_embedding_dim: 32
+  sigma_begin: 1.0 # begin from big noise
+  sigma_end: 0.01
+  sigma_scale: False # True if want to use non-homogeneous sigma at different sample points
+  non_homo_sigma_max_scale: 2.0
+  num_steps: 20
+  n_steps_each: 100
+  start_noise: "student_t"
+  start_noise_t_param: 4.5
+  step_lr: 0.0001
+  anneal_power: 2.0
+  schedule: "quad"
+  is_linear: True
+  noise_type: "student_t"
+  t_param: 4.5 # degree of freedom if using student_t noise
+
+model:
+  is_unconditional: True
+  timeemb: 16
+  featureemb: 8
+  target_strategy: "test"
+  num_sample_features: 20
