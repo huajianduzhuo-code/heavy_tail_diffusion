@@ -10,6 +10,9 @@ Please install the packages in requirements.txt
 
 ## Experiments 
 
+### data
+To generate the data used for each experiment, run the .ipynb file under the corresponding folder in "./data"
+
 ### training and generation
 This is an example of training and generation using the Pareto dataset. Replace the name of the .py file to run other experiments.
 
