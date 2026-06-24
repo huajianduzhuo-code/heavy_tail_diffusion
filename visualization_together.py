@@ -47,16 +47,20 @@ def plot_density(config, all_target, samples, datafolder):
             line1=seaborn.kdeplot(fake_data,label='fake', ax=ax)
             ax.legend()
 
-    plt.savefig('./save/'+datafolder+'/visualize/density_plot.png')
+    plt.savefig('./save/'+datafolder+'/visualize/density_plot.pdf')
     plt.tight_layout()  # Adjusts subplot params so that subplots are nicely fit in the figure area
     plt.show()
     plt.close()
 
 
-def plot_density(model_list, fake_samples, real_samples, datafolder, exp_name, target_dim = [0,1,2,3,4], target_L = [1], color_lis = ['yellowgreen','cornflowerblue'], shape = None, save_fig = True, drop_percentile = 0.5, bw_adjust=1):
+def plot_density(model_list, fake_samples, real_samples, datafolder, exp_name, target_dim = [0,1,2,3,4], target_L = [1], color_lis = ['yellowgreen','cornflowerblue'], shape = None, save_fig = True, drop_percentile = 0.5, bw_adjust=1, transpose=False):
     # Create a figure and an array of subplots
     # plt.rcParams["font.size"] = 16
-    if shape is None:
+    if transpose:
+        n_rows, n_cols = len(target_dim), len(target_L)
+        fig, axes = plt.subplots(n_rows, n_cols, figsize = (4*n_cols, 4*n_rows))  # Adjust the figsize to fit your screen
+        axes = np.array(axes).reshape(n_rows, n_cols)
+    elif shape is None:
         fig, axes = plt.subplots(len(target_L), len(target_dim), figsize = (4*len(target_dim), 4*len(target_L)))  # Adjust the figsize to fit your screen
         axes = np.array(axes).reshape(len(target_L), len(target_dim))
     else:
@@ -66,7 +70,10 @@ def plot_density(model_list, fake_samples, real_samples, datafolder, exp_name, t
     loc_row = 0
     for L in range(len(target_L)):
         for K in range(len(target_dim)):
-            if shape is None:
+            if transpose:
+                loc_row = K
+                loc_col = L
+            elif shape is None:
                 loc_row = L
                 loc_col = K
             else:
@@ -114,15 +121,19 @@ def plot_density(model_list, fake_samples, real_samples, datafolder, exp_name, t
     plt.tight_layout()  # Adjusts subplot params so that subplots are nicely fit in the figure area
     plt.subplots_adjust(hspace=0.35)
     if save_fig:
-        plt.savefig(f'./save/{datafolder}/{exp_name}_density_plot_{len(target_dim)*len(target_L)}.png')
+        plt.savefig(f'./save/{datafolder}/{exp_name}_density_plot_{len(target_dim)*len(target_L)}.pdf')
     plt.show()
 
 
 
-def plot_QQ(model_list, fake_samples, real_samples, datafolder, exp_name, target_dim = [0,1,2,3,4], target_L = [1], color_lis = ['yellowgreen','cornflowerblue'], shape = None, save_fig = True, drop_percentile = 0.5):
+def plot_QQ(model_list, fake_samples, real_samples, datafolder, exp_name, target_dim = [0,1,2,3,4], target_L = [1], color_lis = ['yellowgreen','cornflowerblue'], shape = None, save_fig = True, drop_percentile = 0.5, transpose=False):
     # Create a figure and an array of subplots
     # plt.rcParams["font.size"] = 16
-    if shape is None:
+    if transpose:
+        n_rows, n_cols = len(target_dim), len(target_L)
+        fig, axes = plt.subplots(n_rows, n_cols, figsize = (4*n_cols, 4*n_rows))  # Adjust the figsize to fit your screen
+        axes = np.array(axes).reshape(n_rows, n_cols)
+    elif shape is None:
         fig, axes = plt.subplots(len(target_L), len(target_dim), figsize = (4*len(target_dim), 4*len(target_L)))  # Adjust the figsize to fit your screen
         axes = np.array(axes).reshape(len(target_L), len(target_dim))
     else:
@@ -132,7 +143,10 @@ def plot_QQ(model_list, fake_samples, real_samples, datafolder, exp_name, target
     loc_row = 0
     for L in range(len(target_L)):
         for K in range(len(target_dim)):
-            if shape is None:
+            if transpose:
+                loc_row = K
+                loc_col = L
+            elif shape is None:
                 loc_row = L
                 loc_col = K
             else:
@@ -189,14 +203,18 @@ def plot_QQ(model_list, fake_samples, real_samples, datafolder, exp_name, target
     # plt.tight_layout()  # Adjusts subplot params so that subplots are nicely fit in the figure area
     plt.subplots_adjust(hspace=0.35)
     if save_fig:
-        plt.savefig(f'./save/{datafolder}/{exp_name}_QQ_plot_{len(target_dim)*len(target_L)}.png')
+        plt.savefig(f'./save/{datafolder}/{exp_name}_QQ_plot_{len(target_dim)*len(target_L)}.pdf')
     plt.show()
 
 
-def plot_log_tail_distn(model_list, fake_samples, real_samples, datafolder, exp_name, target_dim = [0,1,2,3,4], target_L = [1], color_lis = ['orange', 'yellowgreen','cornflowerblue'], shape = None, save_fig = True, drop_percentile = 0.5):
+def plot_log_tail_distn(model_list, fake_samples, real_samples, datafolder, exp_name, target_dim = [0,1,2,3,4], target_L = [1], color_lis = ['orange', 'yellowgreen','cornflowerblue'], shape = None, save_fig = True, drop_percentile = 0.5, transpose=False):
     # Create a figure and an array of subplots
     # plt.rcParams["font.size"] = 16
-    if shape is None:
+    if transpose:
+        n_rows, n_cols = len(target_dim), len(target_L)
+        fig, axes = plt.subplots(n_rows, n_cols, figsize = (4*n_cols, 4*n_rows))  # Adjust the figsize to fit your screen
+        axes = np.array(axes).reshape(n_rows, n_cols)
+    elif shape is None:
         fig, axes = plt.subplots(len(target_L), len(target_dim), figsize = (4*len(target_dim), 4*len(target_L)))  # Adjust the figsize to fit your screen
         axes = np.array(axes).reshape(len(target_L), len(target_dim))
     else:
@@ -206,7 +224,10 @@ def plot_log_tail_distn(model_list, fake_samples, real_samples, datafolder, exp_
     loc_col = -1
     for L in range(len(target_L)):
         for K in range(len(target_dim)):
-            if shape is None:
+            if transpose:
+                loc_row = K
+                loc_col = L
+            elif shape is None:
                 loc_row = L
                 loc_col = K
             else:
@@ -257,7 +278,7 @@ def plot_log_tail_distn(model_list, fake_samples, real_samples, datafolder, exp_
     # plt.tight_layout()  # Adjusts subplot params so that subplots are nicely fit in the figure area
     plt.subplots_adjust(hspace=0.35)
     if save_fig:
-        plt.savefig(f'./save/{datafolder}/{exp_name}_log_tail_distn_{len(target_dim)}.png')
+        plt.savefig(f'./save/{datafolder}/{exp_name}_log_tail_distn_{len(target_dim)}.pdf')
     plt.show()
 
 
